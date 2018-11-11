@@ -1,0 +1,1087 @@
+{
+	"info": {
+		"_postman_id": "106f558c-c5df-4103-a9fb-68928cceaadb",
+		"name": "ShipSlipTestSuite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post a new ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f858431f-b9a5-420a-8e66-4011fcbf1ff8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipId1\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test Ship 1\",\n\t\"type\": \"Ship 1\",\n\t\"length\": 10\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get initial number of ships",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1738aac4-2349-43d2-a5e2-f7b5bde53efc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialShipCount\", pm.response.json().length);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post another ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb5ef3bf-2532-4f1d-bff7-a23ac42e08ce",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipId2\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test Ship 2\",\n\t\"type\": \"Ship 2\",\n\t\"length\": 20\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check post adds new ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a3adae8-2ef4-4a02-81c5-8783ec4fe71c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Adding new ship increases ship count by 1\", function () {",
+							"   pm.expect(pm.response.json().length).to.equal(pm.environment.get(\"initialShipCount\") + 1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post new slip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6276b9b9-11f0-40fe-81d7-9ae1fa86027d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"slipId1\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"number\": 1\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get initial slip count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d85125c7-c630-426a-87e9-a93a79ec479b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialSlipCount\", pm.response.json().length);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add another slip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2fc9d128-922d-471c-9d16-b277d91adab1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"slipId2\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"number\": 2\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to see if new slip was added",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d09f3b6-e17a-4497-a196-f6acca3a8c89",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Adding new slip increases slip count by 1\", function () {",
+							"   pm.expect(pm.response.json().length).to.equal(pm.environment.get(\"initialSlipCount\") + 1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can get specific ship back",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10431502-5de6-4f96-97c1-1f314d9af4fe",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialShip1Length\", pm.response.json()[0].length);",
+							"pm.test(\"Check that we can get a specific ship back\", function () {",
+							"    pm.expect(pm.environment.get(\"shipId1\")).to.be.equal(pm.response.json()[0][\"id\"]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can get specific slip back",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24a7c3d1-398b-451a-880c-d2af6ab8c6c8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialSlip1Number\", pm.response.json()[0].number);",
+							"pm.test(\"Check that we can get a specific slip back\", function () {",
+							"    pm.expect(pm.environment.get(\"slipId1\")).to.be.equal(pm.response.json()[0][\"id\"]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check a newly created slip is empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60027227-e714-47b1-bcf7-c9d1dd3fb3f8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that newly created slip is empty\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can modify a ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dbcc3f4e-204a-4766-a8d0-cc43b3dc56e1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Can modify ship by changing length\", function () {",
+							"   pm.expect(pm.response.json()[0].length).to.be.not.equal(pm.environment.get(\"initialShip1length\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"length\": 42\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can modify a slip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "314c7901-2787-43c3-b369-1089ba36b906",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Can modify slip by changing number\", function () {",
+							"   pm.expect(pm.response.json()[0].number).to.be.not.equal(pm.environment.get(\"initialSlip1Number\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"number\": 10\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Park ship 1 into slip 1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"arrival_date\": \"1/10/19\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}",
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that ship 1 is now in slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e67cdc5-afeb-4f15-b149-d714d9a9b689",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that ship 1 is now the current boat in slip 1\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(pm.environment.get(\"shipId1\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt placing ship 2 in slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be0307dc-466a-4e30-aeb9-d25942d774fe",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that we can't place a ship in an occupied slip\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"arrival_date\": \"1/10/19\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}/ships/{{shipId2}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}",
+						"ships",
+						"{{shipId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Move ship 1 into slip 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd1d85e6-e3c4-44f4-8280-63396dbd922b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"arrival_date\": \"1/10/19\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId2}}/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId2}}",
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that ship 1 is now in slip 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d7c3021-caf5-4050-b4af-d03feef5f5af",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that ship 1 is now the current boat in slip 2\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(pm.environment.get(\"shipId1\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId2}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that slip 1 is now empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cf473d5-32ad-4590-bde9-7bf2cc545157",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that slip 1 is now empty\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Move ship 2 into slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd1d85e6-e3c4-44f4-8280-63396dbd922b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"arrival_date\": \"1/10/19\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}/ships/{{shipId2}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}",
+						"ships",
+						"{{shipId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that ship 2 is now in slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef73a88d-4dd8-4607-996e-e0e49ccf880d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that ship 2 is now the current boat in slip 1\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(pm.environment.get(\"shipId2\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make ship 2 depart from slip 1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships/{{shipId2}}/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId2}}",
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that slip 1 is now empty after making ship 2 depart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cf473d5-32ad-4590-bde9-7bf2cc545157",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that slip 1 is now empty\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ship 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that slip 2 is now empty after deleting ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41798921-09c1-45a6-9186-00087a58b337",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that slip 2 is now empty after deleting ship 1\", function () {",
+							"    pm.expect(pm.response.json()[0].current_boat).to.be.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId2}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check ship 1 is no longer here after deleting it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7cd4bffd-4e98-4b18-b844-53b3bbfa9b43",
+						"type": "text/javascript",
+						"exec": [
+							"var shipHere = false;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].id == pm.environment.get(\"shipId1\")) {",
+							"        shipHere = true;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Deleting ship 1 removes it successfully\", function () {",
+							"   pm.expect(shipHere).to.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ship 2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/ships/{{shipId2}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Slip 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId1}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check slip 1 is no longer here after deleting it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b536df2c-03bb-4211-8cd7-181576895585",
+						"type": "text/javascript",
+						"exec": [
+							"var slipHere = false;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].id == pm.environment.get(\"slipId1\")) {",
+							"        slipHere = true;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Deleting slip 1 removes it successfully\", function () {",
+							"   pm.expect(slipHere).to.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Slip 2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://restful-api-ships.appspot.com/slips/{{slipId2}}",
+					"protocol": "https",
+					"host": [
+						"restful-api-ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slips",
+						"{{slipId2}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,121 @@
+'use strict';
+
+const express = require('express');
+var shipRouter = express.Router();
+var slipRouter = express.Router();
+const app = express();
+const Datastore = require('@google-cloud/datastore');
+const bodyParser = require('body-parser');
+
+const projectID = 'restful-api-ships';
+const ships = "SHIPS";
+const slips = "SLIPS";
+
+const datastore = new  Datastore({projectID:projectID});
+app.use(bodyParser.json());
+
+function postShip (name, type, length) {
+    var key = datastore.key(ships);
+    const ship = {
+	"name": name,
+	"type": type,
+	"length": length
+    };
+    const newShip = {
+	key: key,
+	data: ship
+    };
+
+    return datastore.insert(newShip).then(() => {return key});
+}
+
+function postSlip (number) {
+    var key = datastore.key(slips);
+    const slip = {
+	"number": number,
+	"current_boat": null,
+	"arrival_date": ""
+    };
+    const newSlip = {
+	key: key,
+	data: slip
+    };
+
+    return datastore.insert(newSlip).then(() => {return key});
+}
+
+function shipIdAssign (shippy) {
+    var ship = {
+	"name": shippy.name,
+	"type": shippy.type,
+	"lenth": shippy.length,
+	"id": shippy[Datastore.KEY].id
+    };
+    return ship;
+}
+
+function getShips () {
+    const shipQuery = datastore.createQuery(ships);
+    return datastore.runQuery(shipQuery).then(results => {
+	const resultingShips = results[0].map(shipIdAssign);
+	return resultingShips;
+    });
+}
+
+function slipIdAssign (slippy) {
+    var slip = {
+	"number": slippy.number,
+	"current_boat": slippy.current_boat,
+	"arrival_date": slippy.arrival_date,
+	"id": slippy[Datastore.KEY].id
+    };
+    return slip;
+}
+
+function getSlips () {
+    const slipQuery = datastore.createQuery(slips);
+    return datastore.runQuery(slipQuery).then(results => {
+	const resultingSlips = results[0].map(slipIdAssign);
+	return resultingSlips;
+    });
+}
+
+app.get('/', function (req, res) {
+  //display a homepage or return links to get ships or slips
+});
+
+/*---------------Ship Routing Functions---------------*/
+shipRouter.get('/', function (req, res) {
+    const ships = getShips().then((ships) => {
+	res.status(200).json(ships);
+    });
+});
+
+shipRouter.post('/', function (req, res) {
+    postShip(req.body.name, req.body.type, req.body.length).then((key) => {
+	res.status(200).send('{"id": ' + key.id + '}')});
+});
+
+/*---------------Slip Routing Functions---------------*/
+slipRouter.get('/', function (req, res) {
+    const slips = getSlips().then((slips) => {
+	res.status(200).json(slips);
+    });
+});
+
+slipRouter.post('/', function (req, res) {
+    postSlip(req.body.number).then((key) => {
+	res.status(200).send('{"id": ' + key.id + '}')});
+});
+
+app.use('/ships', shipRouter);
+app.use('/slips', slipRouter);
+
+const PORT = process.env.PORT || 8080;
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctrl+C to quit.');
+});
+
+module.exports = app;
+

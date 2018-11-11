@@ -1,0 +1,1689 @@
+{
+	"info": {
+		"_postman_id": "b747f714-4183-464a-a23c-f01f66651a5e",
+		"name": "ShipCargoTestSuite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post a new ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f858431f-b9a5-420a-8e66-4011fcbf1ff8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipId1\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "28323cf9-ec93-460d-81a8-0cc6bf5752b2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"sentShip1Length\", 10);",
+							"pm.environment.set(\"sentShip1Name\", \"Test Ship 1\");",
+							"pm.environment.set(\"sentShip1Type\", \"Ship 1\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"{{sentShip1Name}}\",\n\t\"type\":\"{{sentShip1Type}}\",\n\t\"length\": {{sentShip1Length}}\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get initial number of ships",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff9a1fb1-82af-4772-aaf4-4e7c6a630039",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialShipCount\", pm.response.json().items.length);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post another ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb5ef3bf-2532-4f1d-bff7-a23ac42e08ce",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipId2\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test Ship 2\",\n\t\"type\": \"Ship 2\",\n\t\"length\": 20\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check post adds new ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec227b7e-e8aa-44c7-b9e3-968f9a2e85d8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Adding new ship increases ship count by 1\", function () {",
+							"   pm.expect(pm.response.json().items.length).to.equal(pm.environment.get(\"initialShipCount\") + 1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a third ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ef00dff-be36-4fa0-b11a-6e7f1a3344cd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipId3\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test Ship 3\",\n\t\"type\": \"Ship 3\",\n\t\"length\": 30\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a fourth ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "45e1dad5-7ae0-491b-b7a2-c86db89f4fae",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipId4\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test Ship 4\",\n\t\"type\": \"Ship 4\",\n\t\"length\": 40\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that more than 3 ships causes paginated results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9737869a-1ddd-4596-859c-d9e06b604170",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"shipPaginate\", pm.response.json().next);",
+							"pm.test(\"Having more than 4 ships causes pagination\", function () {",
+							"   pm.expect(pm.response.json().next).to.not.be.equal(undefined);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Following next page link takes us to more ships",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "87557fee-7ca7-497f-9718-61fc5d43306c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Following paginated link leads to a list of ships\", function () {",
+							"   pm.expect(pm.response.json().items.length).to.not.be.equal(0);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{shipPaginate}}",
+					"host": [
+						"{{shipPaginate}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can get specific ship back",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "902276a7-2194-4470-8977-7cebb384ca0a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialShip1Length\", pm.response.json()[0].length);",
+							"pm.environment.set(\"initialShip1Name\", pm.response.json()[0].name);",
+							"pm.environment.set(\"initialShip1Type\", pm.response.json()[0].type);",
+							"pm.environment.set(\"ship1SelfLink\", pm.response.json()[0].self);",
+							"pm.test(\"Check that we can get a specific ship back\", function () {",
+							"    pm.expect(pm.environment.get(\"shipId1\")).to.be.equal(pm.response.json()[0][\"id\"]);",
+							"});",
+							"pm.test(\"Check that the length matches what was sent\", function () {",
+							"   pm.expect(pm.response.json()[0].length).to.equal(pm.environment.get(\"sentShip1Length\"));",
+							"});",
+							"pm.test(\"Check that the name matches what was sent\", function () {",
+							"   pm.expect(pm.response.json()[0].name).to.equal(pm.environment.get(\"sentShip1Name\"));",
+							"});",
+							"pm.test(\"Check that the type matches what was sent\", function () {",
+							"   pm.expect(pm.response.json()[0].type).to.equal(pm.environment.get(\"sentShip1Type\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can modify all of a ships properties",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7bdd482b-1bcf-41e0-b53e-84d80ce170c1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Can modify ship by changing length\", function () {",
+							"   pm.expect(pm.response.json()[0].length).to.be.not.equal(pm.environment.get(\"initialShip1Length\"));",
+							"});",
+							"pm.test(\"Can modify ship by changing name\", function () {",
+							"   pm.expect(pm.response.json()[0].name).to.be.not.equal(pm.environment.get(\"initialShip1Name\"));",
+							"});",
+							"pm.test(\"Can modify ship by changing type\", function () {",
+							"   pm.expect(pm.response.json()[0].type).to.be.not.equal(pm.environment.get(\"initialShip1Type\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"length\": 42,\n\t\"name\": \"Wiggly Woo Ha\",\n\t\"type\": \"Slippery ship\"\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can follow a self link",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c010bbf5-39d5-4387-b76f-a24a60053096",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that we can follow a self link\", function () {",
+							"    pm.expect(pm.environment.get(\"shipId1\")).to.be.equal(pm.response.json()[0][\"id\"]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{ship1SelfLink}}",
+					"host": [
+						"{{ship1SelfLink}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post new cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9aa55c6-56f9-46ae-9bd6-eb8530354192",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"cargoId1\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ee8da23b-6373-42ea-9a9b-98126be8c658",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"sentCargo1Weight\", 10);",
+							"pm.environment.set(\"sentCargo1Content\", \"HRMs\");",
+							"pm.environment.set(\"sentCargo1Date\", \"12/18/54\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"{{sentCargo1Content}}\",\n\t\"delivery_date\":\"{{sentCargo1Date}}\",\n\t\"weight\": {{sentCargo1Weight}}\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get initial number of cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a329257e-586a-47d4-afb8-c8d57e5eddff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialCargoCount\", pm.response.json().items.length);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post more cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "415a9e37-b846-4d4c-804f-327cc44ef40e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"cargoId2\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"Pumpkins\",\n\t\"delivery_date\":\"10/31/19\",\n\t\"weight\": 200\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check post adds new cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0387c61c-fb5b-40a6-af72-beec970b5503",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Adding new cargo increases ship count by 1\", function () {",
+							"   pm.expect(pm.response.json().items.length).to.equal(pm.environment.get(\"initialCargoCount\") + 1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post third cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4acb21a5-0793-4017-9086-eff8f2548ce6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"cargoId3\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"Ironically ships\",\n\t\"delivery_date\":\"08/09/45\",\n\t\"weight\": 3000\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a fourth cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3eefb695-1ba6-4fad-9f5a-a18b00f23e57",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"cargoId4\", pm.response.json()[\"id\"].toString());"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\":\"Unironically cargo\",\n\t\"delivery_date\":\"04/01/69\",\n\t\"weight\": 420\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that more than 4 cargo causes pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4bb4265-6127-4664-aa3c-ee52469e1dd0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"cargoPaginate\", pm.response.json().next);",
+							"pm.test(\"Having more than 4 cargo causes pagination\", function () {",
+							"   pm.expect(pm.response.json().next).to.not.be.equal(undefined);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Following next page link takes us to more cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d5d4be61-258d-4559-8cfe-d185e7eccdcc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Following paginated link leads to a list of cargo\", function () {",
+							"   pm.expect(pm.response.json().items.length).to.not.be.equal(0);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{cargoPaginate}}",
+					"host": [
+						"{{cargoPaginate}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can get specific cargo back",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dec7f718-f2e2-49ac-8d51-d149b338a006",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"initialCargo1Weight\", pm.response.json()[0].weight);",
+							"pm.environment.set(\"initialCargo1Content\", pm.response.json()[0].content);",
+							"pm.environment.set(\"initialCargo1Date\", pm.response.json()[0].delivery_date);",
+							"pm.environment.set(\"cargo1SelfLink\", pm.response.json()[0].self);",
+							"pm.test(\"Check that we can get a specific cargo back\", function () {",
+							"    pm.expect(pm.environment.get(\"cargoId1\")).to.be.equal(pm.response.json()[0][\"id\"]);",
+							"});",
+							"pm.test(\"Check that the weight matches what was sent\", function () {",
+							"   pm.expect(pm.response.json()[0].weight).to.equal(pm.environment.get(\"sentCargo1Weight\"));",
+							"});",
+							"pm.test(\"Check that the content matches what was sent\", function () {",
+							"   pm.expect(pm.response.json()[0].content).to.equal(pm.environment.get(\"sentCargo1Content\"));",
+							"});",
+							"pm.test(\"Check that the delivery date matches what was sent\", function () {",
+							"   pm.expect(pm.response.json()[0].delivery_date).to.equal(pm.environment.get(\"sentCargo1Date\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can modify all the properties of cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb58affc-1b48-41ca-82e3-631c59b59e77",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Can modify cargo by changing weight\", function () {",
+							"   pm.expect(pm.response.json()[0].weight).to.be.not.equal(pm.environment.get(\"initialCargo1Weight\"));",
+							"});",
+							"pm.test(\"Can modify cargo by changing content\", function () {",
+							"   pm.expect(pm.response.json()[0].content).to.be.not.equal(pm.environment.get(\"initialCargo1Content\"));",
+							"});",
+							"pm.test(\"Can modify cargo by changing date\", function () {",
+							"   pm.expect(pm.response.json()[0].delivery_date).to.be.not.equal(pm.environment.get(\"initialCargo1Date\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"weight\": 5000,\n\t\"content\": \"Wiggles\",\n\t\"delivery_date\": \"06/30/20\"\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can follow a self link",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ec19d91-808f-4d1d-b591-8a29123999b8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that we can follow a self link\", function () {",
+							"    pm.expect(pm.environment.get(\"cargoId1\")).to.be.equal(pm.response.json()[0][\"id\"]);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{cargo1SelfLink}}",
+					"host": [
+						"{{cargo1SelfLink}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put cargo onto a ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47661328-ec19-4b2e-93ae-f8a418bd8865",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Putting cargo on a ship adds the cargo to the ship's cargo hold\", function () {",
+							"   pm.expect(pm.response.json()[0].cargo[0].id).to.equal(pm.environment.get(\"cargoId1\"));",
+							"});",
+							"pm.environment.set(\"shipCargoSelfLink1\", pm.response.json()[0].cargo[0].self);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo/{{cargoId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo",
+						"{{cargoId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check carrier is properly updated in cargo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7ee9dd8e-ebca-4f3a-ade6-bee18b1e0a52",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Following self link in cargo takes us to that cargo\", function () {",
+							"   pm.expect(pm.response.json()[0].id).to.equal(pm.environment.get(\"cargoId1\"));",
+							"});",
+							"pm.test(\"Carrier is no longer null\", function () {",
+							"   pm.expect(pm.response.json()[0].carrier).to.not.be.equal(null);",
+							"});",
+							"pm.test(\"Carrier ID matches ship 1 id\", function () {",
+							"   pm.expect(pm.response.json()[0].carrier.id).to.equal(pm.environment.get(\"shipId1\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{shipCargoSelfLink1}}",
+					"host": [
+						"{{shipCargoSelfLink1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can see cargo 1 item in ship 1's cargo collection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "744f2658-89e3-4d62-a68c-b8f2a8b2333e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check we can see cargo item in the cargo collection of ship 1\", function () {",
+							"   pm.expect(pm.response.json().items[0].id).to.equal(pm.environment.get(\"cargoId1\"));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put 2nd cargo on ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fed7b106-bfb3-42fb-88c9-bf96c8d33554",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo/{{cargoId2}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo",
+						"{{cargoId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put 3rd cargo item on ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fed7b106-bfb3-42fb-88c9-bf96c8d33554",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo/{{cargoId3}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo",
+						"{{cargoId3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put 4th cargo item on ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fed7b106-bfb3-42fb-88c9-bf96c8d33554",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo/{{cargoId4}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo",
+						"{{cargoId4}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that we get pagination on ship 1's cargo collection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8c41291a-8d7f-4092-9951-bbc94c412d29",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that more than 3 cargo items on ship 1 causes pagination\", function () {",
+							"   pm.expect(pm.response.json().next).to.not.be.equal(undefined);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure we can't move cargo from one ship to another",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60bba93a-6f6c-40a2-8ec4-0786886eea3a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that we can't put cargo on another ship when loaded on another\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId2}}/cargo/{{cargoId4}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId2}}",
+						"cargo",
+						"{{cargoId4}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove cargo 4 from ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e319059-8c54-4349-a8b5-f838c19d638c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}/cargo/{{cargoId4}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}",
+						"cargo",
+						"{{cargoId4}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check carrier is null after removing cargo 4 from ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5562bb6-0367-43d5-97f2-f2463f60b965",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that the carrier is null after removing cargo from ship\", function () {",
+							"   pm.expect(pm.response.json()[0].carrier).to.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId4}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId4}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure cargo 4 isn't on ship 1's cargo hold",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1db9e496-313d-4697-9b2e-67dd1a78c903",
+						"type": "text/javascript",
+						"exec": [
+							"var cargoHere = false;",
+							"var i;",
+							"for (i = 0; i < pm.response.json()[0].cargo.length; i++) {",
+							"    if (pm.response.json()[0].cargo[i].id == pm.environment.get(\"cargoId4\")) {",
+							"        cargoHere = true;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Check that cargo 4 is no longer in ship 1's cargo list\", function () {",
+							"   pm.expect(cargoHere).to.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cargo 3",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId3}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure cargo 3 is no longer on ship 1 after deleting it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "326c74ff-7c0e-40ad-913b-ac5c8f7bb865",
+						"type": "text/javascript",
+						"exec": [
+							"var cargoHere = false;",
+							"var i;",
+							"for (i = 0; i < pm.response.json()[0].cargo.length; i++) {",
+							"    if (pm.response.json()[0].cargo[i].id == pm.environment.get(\"cargoId3\")) {",
+							"        cargoHere = true;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Check that cargo 3 is no longer in ship 1's cargo list\", function () {",
+							"   pm.expect(cargoHere).to.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check cargo 3 has been completely removed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9701fa5f-a012-4435-afef-35080c53d0ec",
+						"type": "text/javascript",
+						"exec": [
+							"var cargoHere = false;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().items.length; i++) {",
+							"    if (pm.response.json().items[i].id == pm.environment.get(\"cargoId3\")) {",
+							"        cargoHere = true;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Check that cargo 3 is no longer in the collection\", function () {",
+							"   pm.expect(cargoHere).to.equal(false);",
+							"});",
+							"pm.test(\"Check that there is no next page that cargo 3 could be on\", function () {",
+							"    pm.expect(pm.response.json().next).to.equal(undefined);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ace2025-5788-403b-8b48-da0edfda16e9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check ship 1 no longer exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06aea512-410c-4b5d-ae91-77652254900b",
+						"type": "text/javascript",
+						"exec": [
+							"var shipHere = false;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().items.length; i++) {",
+							"    if (pm.response.json().items[i].id == pm.environment.get(\"shipId1\")) {",
+							"        shipHere = true;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Check that ship 1 is no longer in the collection\", function () {",
+							"   pm.expect(shipHere).to.equal(false);",
+							"});",
+							"pm.test(\"Check that there is no next page that ship 1 could be on\", function () {",
+							"    pm.expect(pm.response.json().next).to.equal(undefined);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check that carrier is null after deleting ship 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5562bb6-0367-43d5-97f2-f2463f60b965",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check that the carrier is null after removing cargo from ship\", function () {",
+							"   pm.expect(pm.response.json()[0].carrier).to.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ship 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ace2025-5788-403b-8b48-da0edfda16e9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId2}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ship 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ace2025-5788-403b-8b48-da0edfda16e9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId3}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ship 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ace2025-5788-403b-8b48-da0edfda16e9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/ships/{{shipId4}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{shipId4}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cargo 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId1}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cargo 2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId2}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete cargo 4",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://cpcs493intermediateapi.appspot.com/cargo/{{cargoId4}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493intermediateapi",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"cargo",
+						"{{cargoId4}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
