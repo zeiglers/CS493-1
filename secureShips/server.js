@@ -12,11 +12,31 @@ const app = express();
 const Datastore = require('@google-cloud/datastore');
 const bodyParser = require('body-parser');
 const json2html = require('json-to-html');
+const jwt = require('express-jwt');
+const jwtAuthz = require('express-jwt-authz');
+const jwksRsa = require('jwks-rsa');
 const ships = "SHIPS";
-const projectID = 'CPCS493SecureShips';
+const projectID = 'CPCS493LoginShips';
 
-const datastore = new  Datastore({projectID:projectID});
+const datastore = new Datastore({projectID:projectID});
 app.use(bodyParser.json());
+
+const checkJwt = jwt({
+  // Dynamically provide a signing key
+  // based on the kid in the header and 
+  // the signing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://pappasc.auth0.com/.well-known/jwks.json`
+  }),
+
+  // Validate the audience and the issuer.
+  audience: 'YOUR_API_IDENTIFIER',
+  issuer: `https://pappasc.auth0.com/`,
+  algorithms: ['RS256']
+});
 
 /**************************************************************************************
 Method: postShip
@@ -53,7 +73,7 @@ function shipIdAssign (shippy) {
 	"type": shippy.type,
 	"length": shippy.length,
 	"id": shippy[Datastore.KEY].id,
-	"self": "https://cpcs493advancedapi.appspot.com/ships/" + shippy[Datastore.KEY].id
+	"self": "https://cpcs493loginships.appspot.com/ships/" + shippy[Datastore.KEY].id
     };
     return ship;
 }
@@ -83,42 +103,6 @@ function getShip (shipID) {
     return datastore.runQuery(shipQuery).then(results => {
 	var resultingShip = results[0].map(shipIdAssign);
 	return resultingShip;
-    });
-}
-
-/**************************************************************************************
-Method: modifyShip
-Parameters: shipID - ID of the ship to modify
-            newData - Data received from a client to change the ship
-Description: Modify a specific ship
-**************************************************************************************/
-function modifyShip (shipID, newData) {
-    const key = datastore.key([ships, parseInt(shipID,10)]);
-    return datastore.get(key).then(results => {
-	var updatedShip = {
-	    "name": results[0].name,
-	    "type": results[0].type,
-	    "length": results[0].length,
-	};
-	
-	if (newData.name != null) {
-	    updatedShip.name = newData.name;
-	}
-	if (newData.type != null) {
-	    updatedShip.type = newData.type;
-	}
-	if (newData.length != null) {
-	    updatedShip.length = newData.length;
-	}
-	
-	const fullyUpdatedShip = {
-	    key: key,
-	    data: updatedShip
-	};
-
-	return datastore.update(fullyUpdatedShip).then(() => {
-	    return;
-	});
     });
 }
 
@@ -197,36 +181,10 @@ shipRouter.post('/', function (req, res) {
     }
 });
 
-// Patch route for ships without the specified ID
-shipRouter.patch('/', function (req, res) {
-    res.set('Accept', 'GET, POST');
-    res.status(405).end();
-});
-
 // Delete route for ships without the specified ID
 shipRouter.delete('/', function (req, res) {
     res.set('Accept', 'GET, POST');
     res.status(405).end();
-});
-
-// Modify a ship
-shipRouter.patch('/:shipID', function (req, res) {
-    if (req.get('content-type') !== 'application/json') {
-	res.status(415).send('Server only accepts application/json data, you ding dong.');
-    }
-    else {
-	getShip(req.params.shipID).then((ship) => {
-	    if (ship.length == 0) {
-		res.status(404).send('Ship with that ID not found');
-	    }
-	    else {
-		modifyShip(req.params.shipID, req.body).then(() => {
-		    res.location(req.protocol + "://" + req.get('host') + req.baseUrl + '/' + req.params.shipID);
-		    res.status(303).send();
-		});
-	    }
-	});
-    }
 });
 
 // Delete a ship
