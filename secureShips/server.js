@@ -13,7 +13,6 @@ const Datastore = require('@google-cloud/datastore');
 const bodyParser = require('body-parser');
 const json2html = require('json-to-html');
 const jwt = require('express-jwt');
-const jwtAuthz = require('express-jwt-authz');
 const jwksRsa = require('jwks-rsa');
 const ships = "SHIPS";
 const projectID = 'CPCS493LoginShips';
