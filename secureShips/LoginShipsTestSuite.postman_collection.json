@@ -1,0 +1,945 @@
+{
+	"info": {
+		"_postman_id": "daaed65a-2cd7-4d41-9a1b-8593d041ecec",
+		"name": "LoginShipsTestSuite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login as User1 to get IdToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d417422b-f26e-4813-8970-9d5aeab88a7e",
+						"exec": [
+							"pm.environment.set(\"user1IdToken\", pm.response.json().id_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"user1@cpcs493loginships.com\",\n\t\"password\": \"cpcs493!\"\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/login",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login as User2 to get IdToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f013eff6-df9e-441e-ab08-9bd1eefde1ed",
+						"exec": [
+							"pm.environment.set(\"user2IdToken\", pm.response.json().id_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"user2@cpcs493loginships.com\",\n\t\"password\": \"CPCS493!\"\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/login",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User1's ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "842b2dec-1320-45bb-a755-b971302024b5",
+						"exec": [
+							"pm.environment.set(\"user1ID\", pm.response.json().id);",
+							"pm.environment.set(\"user1name\", pm.response.json().name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/users/userid",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"userid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User2's ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8731f3c5-70eb-4360-8677-7b0996cac4f7",
+						"exec": [
+							"pm.environment.set(\"user2ID\", pm.response.json().id);",
+							"pm.environment.set(\"user2name\", pm.response.json().name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/users/userid",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"userid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a ship as User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8294ffbf-be00-4a31-badb-d00f750bae1d",
+						"exec": [
+							"pm.environment.set(\"user1ShipID\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"User1 Ship\",\n\t\"type\": \"1 of a kind\",\n\t\"length\": 45\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a ship as User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96103b60-72d0-43c8-9b67-00248fc3ff46",
+						"exec": [
+							"pm.environment.set(\"user2ShipID\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"User2 Ship\",\n\t\"type\": \"2 is a pair\",\n\t\"length\": 89\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post without JWT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8294ffbf-be00-4a31-badb-d00f750bae1d",
+						"exec": [
+							"pm.test(\"Status code is 401 for request without a valid JWT\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Rejected\",\n\t\"type\": \"Rejected\",\n\t\"length\": 88\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ships and check for attributes and owners",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00af4e47-7d56-4350-97ee-44ca24e62b1a",
+						"exec": [
+							"var sixAttrs = true;",
+							"var i;",
+							"var user1ShipIndex;",
+							"var user2ShipIndex;",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (Object.keys(pm.response.json()[i]).length != 6) {",
+							"        sixAttrs = false;",
+							"        break;",
+							"    }",
+							"}",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].id == pm.environment.get(\"user1ShipID\")) {",
+							"        user1ShipIndex = i;",
+							"        break;",
+							"    }",
+							"}",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].id == pm.environment.get(\"user2ShipID\")) {",
+							"        user2ShipIndex = i;",
+							"        break;",
+							"    }",
+							"}",
+							"pm.test(\"Ships have 6 properties\", function () {",
+							"    pm.expect(sixAttrs).to.equal(true);",
+							"});",
+							"pm.test(\"User1's ship is has user1 as its owner\", function () {",
+							"    pm.expect(pm.response.json()[user1ShipIndex].owner).to.equal(pm.environment.get(\"user1name\"));",
+							"});",
+							"pm.test(\"User2's ship is has user2 as its owner\", function () {",
+							"    pm.expect(pm.response.json()[user2ShipIndex].owner).to.equal(pm.environment.get(\"user2name\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can get all of User1's ships",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d1160f6b-ee82-4e7f-8ae9-07e5c5ce0f09",
+						"exec": [
+							"var allOwned = true;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].owner != pm.environment.get(\"user1name\")) {",
+							"        allOwned = false;",
+							"    }",
+							"}",
+							"pm.test(\"All ships are owned by User1\", function () {",
+							"    pm.expect(allOwned).to.equal(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/users/{{user1ID}}/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1ID}}",
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check we can get all of User2's ships",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2b0d37d-070c-4b61-9bb7-ddc048d41c68",
+						"exec": [
+							"var allOwned = true;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].owner != pm.environment.get(\"user2name\")) {",
+							"        allOwned = false;",
+							"    }",
+							"}",
+							"pm.test(\"All ships are owned by User2\", function () {",
+							"    pm.expect(allOwned).to.equal(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/users/{{user2ID}}/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user2ID}}",
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try to view another owner's ships with incorrect JWT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1f89e1dc-bbac-4af8-a856-b3b7eef3ad03",
+						"exec": [
+							"pm.test(\"Forbidden from seeing another owner's ships\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/users/{{user1ID}}/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1ID}}",
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try deleting another owner's ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76b54d22-ef4d-4e0f-bd96-25ee70317ac1",
+						"exec": [
+							"pm.test(\"Forbidden from deleting another owner's ships\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships/{{user1ShipID}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{user1ShipID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User1's ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdf2d3db-9078-408a-b39a-355e15e87985",
+						"exec": [
+							"pm.test(\"Deleting a ship returns 204 status\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships/{{user1ShipID}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{user1ShipID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assert User1's ship was deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00af4e47-7d56-4350-97ee-44ca24e62b1a",
+						"exec": [
+							"var shipGone = true;",
+							"var i;",
+							"for (i = 0; i < pm.response.json().length; i++) {",
+							"    if (pm.response.json()[i].id == pm.environment.get(\"user1ShipID\")) {",
+							"        shipGone = false;",
+							"        break;",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"User1's ship was deleted\", function () {",
+							"    pm.expect(shipGone).to.equal(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User2's ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdf2d3db-9078-408a-b39a-355e15e87985",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2IdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/ships/{{user2ShipID}}",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{user2ShipID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new account",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d717302b-642c-494f-b05a-cd769f49d25d",
+						"exec": [
+							"var str = \"\";",
+							"for ( ; str.length < 16; str += Math.random().toString( 36 ).substr( 2 ) );",
+							"str += \"@cpcs493loginships.com\"",
+							"pm.environment.set(\"randomEmail\", str);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "16f30fbd-9476-43fd-a618-15a0073adcaa",
+						"exec": [
+							"pm.environment.set(\"newAccountID\", pm.response.json()._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{randomEmail}}\",\n\t\"password\": \"cpcs493!\"\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/signup",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get new account's id token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d417422b-f26e-4813-8970-9d5aeab88a7e",
+						"exec": [
+							"pm.environment.set(\"randomIdToken\", pm.response.json().id_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{randomEmail}}\",\n\t\"password\": \"cpcs493!\"\n}"
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/login",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure the new account was made",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "842b2dec-1320-45bb-a755-b971302024b5",
+						"exec": [
+							"pm.test(\"Check the id we get from the JWT matches the one that was received from the signup\", function () {",
+							"    pm.expect(pm.environment.get(\"newAccountID\")).to.equal(pm.response.json().id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{randomIdToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://cpcs493loginships.appspot.com/users/userid",
+					"protocol": "https",
+					"host": [
+						"cpcs493loginships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"userid"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
