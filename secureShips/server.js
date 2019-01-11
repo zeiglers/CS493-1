@@ -20,8 +20,8 @@ const jwksRsa = require('jwks-rsa');
 const rp = require('request-promise');
 const ships = "SHIPS";
 const projectID = 'CPCS493LoginShips';
-const clientID = 'OVI7eehz7BYvv40TqZt3Ci3ax7UErwjk';
-const clientSecret = 'SMBqeVIuEiSWN9KP0FNMcHyeFhw6HbRITrdlzdBLil0pM6r2W8GPh-vK46cZYdTh';
+const clientID = '';
+const clientSecret = '';
 
 const datastore = new Datastore({projectID:projectID});
 app.use(bodyParser.json());
@@ -31,11 +31,11 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://pappasc.auth0.com/.well-known/jwks.json`
+    jwksUri: ``
   }),
 
   audience: clientID,
-  issuer: `https://pappasc.auth0.com/`,
+  issuer: ``,
   algorithms: ['RS256']
 });
 
